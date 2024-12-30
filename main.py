@@ -29,7 +29,7 @@ def global_data():
             user_tours = user.tours
         else:
             user_tours = []
-    return dict(departures = data.departures ,user_tours = user_tours)
+        return dict(departures = data.departures ,user_tours = user_tours)
 
 
 @login_manager.user_loader
@@ -117,6 +117,7 @@ def reserve(tour_id:int):
         tour = session.query(Tour).where(Tour.id == tour_id).first()
         user = session.query(User).where(User.id == current_user.id).first()
         user.tours.append(tour)
+        session.commit()
         flash("Тур успішно заброньовано")
         return redirect(url_for("cabinet"))
     
